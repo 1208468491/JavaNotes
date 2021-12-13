@@ -1,6 +1,7 @@
 package com.company;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Scanner;
 
 enum Size { SMALL, MEDIUM, LARGE, EXTRA_LARGE };
@@ -17,7 +18,7 @@ public class Main {
         var val = 10;
         System.out.println(val);
 
-        final double CM_PER_INCH = 2.54;
+        final double CM_PER_INCH = 2.54; // 常量
 
         System.out.println(CM_PER_INCH_);
 
@@ -210,6 +211,23 @@ public class Main {
         /// 打印Array中所有值的小技巧
         System.out.println(a1.toString());
 
+        /// 数组拷贝
+        // 数组拷贝是拷贝引用，一个引用改变之后另一个也会改变
+        int[] luckyNumbers = smallPrimes;
+        luckyNumbers[5] = 12; // smallPrimes也会改变
+        // 把数组中所有的值拷贝到新的数组中
+        int[] copiedLuckyNumbers = Arrays.copyOf(luckyNumbers, luckyNumbers.length);
+        // 第二个参数是数组大小，通常用来增加数组容量
+        luckyNumbers = Arrays.copyOf(luckyNumbers, luckyNumbers.length * 2);
+        /// 当数组的元素是数值型，额外元素被赋值为0，boolean类型赋值为false，如果小于原始数组长度，只拷贝前面的值
+        /// Java中的[]运算符被预定义为会完成 越界检查，而且没有指针运算，即不能通过 a加1 得到数组中的下一个元素
+
+        /// 命令行参数，每个Java程序都有一个带String args[]参数的main方法，这个参数表明main方法将接收一个字符串数组
+        /// 也就是命令行上指定的参数，详情见 《Java核心卷 卷1》 82页
+
+        /// Arrays 排序
+        int[] array = new int[10000];
+        Arrays.sort(array); // 使用优化的快速排序
 
     }
 

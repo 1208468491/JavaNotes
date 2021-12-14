@@ -100,7 +100,7 @@ public class Main {
         /// 一定不要使用 == 来比较两个字符串，在这里 == 用于确定两个字符串是否在同一个地址上
 
         /// 空串与 null
-        String str = "";
+        String str = "str";
         if (str.length() == 0) return; // 判断字符串是否为空
         if (str.equals("")) return; // 判断字符串是否为空
         // String还可以存放一个特殊值，为null，表示当前没有任何对象和变量相关联
@@ -109,20 +109,27 @@ public class Main {
         if (str != null && str.length() == 0) return; // 判断一个字符串不为null也不为空
 
         /// 获取字符串的长度
-        int n = greeting.length(); // 获取到的是UTF-16编码给定字符串所需要的代码单元数量
-        int cpCount = greeting.codePointCount(0, greeting.length()); // 获取实际长度，Unicode数量
-        char first = greeting.charAt(0); // 返回第i个代码单元
-        int index = greeting.offsetByCodePoints(0, 5);
-        int offset = greeting.codePointAt(index); // 获取第i个码点
+        String codeString = "😀code point";
+        char firstChar = codeString.charAt(0);
+        System.out.println(firstChar);
 
-        /// 遍历字符串
+        int targetIndex = codeString.offsetByCodePoints(0, 1);
+        int codePoint = codeString.codePointAt(targetIndex);
+
+        int[] codePoints = codeString.codePoints().toArray();
+        System.out.println("Code Points: " + codePoints.toString());
+
+        String firstStr = new String(codePoints, 0, 1);
+        System.out.println("First Str" + firstStr);
+
+        System.out.println("codePoint");
+        // 遍历字符串
         String sentence = "Sentence";
         int i = 1;
         // 正向遍历
         int codePoint = sentence.codePointAt(i);
         if (Character.isSurrogate(sentence.charAt(i))) i += 2;
         else i ++;
-
         // 反向遍历
         i --;
         if (Character.isSurrogate(sentence.charAt(i))) i --;

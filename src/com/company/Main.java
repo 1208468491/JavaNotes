@@ -1,11 +1,12 @@
 package com.company;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 
-enum Size { SMALL, MEDIUM, LARGE, EXTRA_LARGE };
+enum Size { SMALL, MEDIUM, LARGE, EXTRA_LARGE }
 
+/// 待学：3.6.6  4.2.2
 public class Main {
     static final double CM_PER_INCH_ = 2.54;
 
@@ -26,7 +27,9 @@ public class Main {
 
         System.out.println(size);
 
-        long lval = 10l;
+        long lval = 10L;
+
+        float fval = 10f;
 
         System.out.println("100_000_000");
 
@@ -42,6 +45,7 @@ public class Main {
         String greeting = "Hello";
         // substring(startIdx, endIndex) substring(startIndex)
         // Q: 为什么一个函数名可以是两个函数，重载？
+        // A: 重载
         String s = greeting.substring(0, 3); // 执行的是复制操作
 
         /// 拼接
@@ -63,13 +67,17 @@ public class Main {
         System.out.println(all + repeated);
 
         /// String 类没有修改字符串的方法，要修改字符串可以使用substring
-        /// Q: 也可以直接修改字符串本身？ A: 可以修改字符串变量，让它引用到另一个字符串
+        /// Q: 好像也可以直接修改字符串本身？ A: 可以修改字符串变量，让它引用到另一个字符串
         /// Q2: 怎么又是引用了？
         greeting = greeting.substring(0, 3) + "p!";
         System.out.println(greeting);
 
         // A2: 通过测试，两个字符串的行为不是指向同一个引用
+        // A2补充：因为字符串是不可变类型，当修改一个字符串对象时，相当于重新为对象赋值
         String anotherGreeting = greeting;
+        // 下面为证实A2的代码
+        // 让greeting和another指向同一个引用，再修改anotherGreeting
+        // 此时anotherString被重新赋值一个新的字符串对象，而不是修改它指向的地址
 //        anotherGreeting = anotherGreeting.substring(0, 3) + "!";
         anotherGreeting = "greeting";
         System.out.println(anotherGreeting + greeting);
@@ -228,22 +236,68 @@ public class Main {
         /// Arrays 排序
         int[] array = new int[10000];
         Arrays.sort(array); // 使用优化的快速排序
+    }
+
+    /// 根据 k个数 n最大 生成不重复的随机数
+    public static void buildRandomArray() {
+        Scanner in = new Scanner(System.in);
+
+        System.out.println("How many numbers?");
+        int k = in.nextInt();
+
+        System.out.println("What is the highest number");
+        int n = in.nextInt();
+
+        int[] numbers = new int[n];
+        for (int i = 0; i < numbers.length; i ++) {
+            numbers[i] = i + 1;
+        }
+
+        int[] result = new int[k];
+        for (int i = 0; i < result.length; i ++) {
+            int r = (int) (Math.random() * n); // random返回一个 0 - 1的随机数
+            result[i] = numbers[r];
+            numbers[r] = numbers[n - 1]; // 把已经取出的随机数从原数组中删除
+            n -= 1;
+        }
+
+        Arrays.sort(result);
+        for (int r : result) {
+            System.out.println(r);
+        }
+    }
+
+    public static void prebuildClassDate() {
+        Date birthday = new Date();
+        Date deadline; // 创建一个可以引用Date的对象 但此时deadline并不是一个对象
+//        deadline.toString(); // 这样的函数调用会报错
+        deadline = new Date(); // 引用一个新的构造对象
+        deadline = birthday; // 引用已有对象
+
+        deadline = null; // 显示的赋值为 null，表示deadline没有引用任何对象
+
+        /// 所有Java的对象都保存在堆里，当一个对象包含另一个对象变量时，它只是包含另一个变量的堆对象指针
 
     }
 
+    public static void EmployeeTest() {
+//        Employee employee = new Employee("employee", 50000, 1989, 10, 1);
+        // 上面的代码等效于下面的代码 var关键字只用于局部变量
+        var employee = new Employee("name", 50000, 1989, 10, 1);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

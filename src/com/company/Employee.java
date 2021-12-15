@@ -21,12 +21,18 @@ public class Employee
     /// final 对于基本类型或者不可变类型尤其有用，如果类中所有的方法都不会改变其对象，这个类就是不可变类，比如String
     /// String 被改变之后相当于赋值了一个新的对象的引用
     /// final 修饰 可变对象 的时候，这个对象还是可以改变，但是不能指向另一个引用
-    private final String name;
+    private final String name; // 显式的初始化
     private double salary;
     private LocalDate hireDay;
 
     private static int nextId = 1;
-    private int id;
+    private int id = assignId(); // 显式的初始化
+
+    private static int assignId() {
+        int r = nextId;
+        nextId += 1;
+        return r;
+    }
 
     public Employee(String n, double s, int year, int month, int day) {
         // 判断 n 是否为空，在空的时候赋值
@@ -38,8 +44,14 @@ public class Employee
     }
 
     public Employee(String n, double s) {
-        name = n;
+        name = n; // 有默认值的时候不能在初始化方法中赋值
         salary = s;
+    }
+
+    /// 使用this在构造方法中调用另一个构造方法
+    public Employee(double s) {
+        this("Employee" + nextId, s);
+        nextId += 1;
     }
 
     public String getName() {
